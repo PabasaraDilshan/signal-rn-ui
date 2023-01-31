@@ -29,7 +29,7 @@ const AddChatScreen: React.FC<{navigation: NavigationProp<ParamListBase>}> = ({
       });
   };
   return (
-    <View>
+    <View style={styles.container}>
       <Input
         placeholder="Enter a chat name"
         value={input}
@@ -45,4 +45,10 @@ const AddChatScreen: React.FC<{navigation: NavigationProp<ParamListBase>}> = ({
 
 export default AddChatScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: 'white',
+    padding: 30,
+    height: '100%',
+  },
+});

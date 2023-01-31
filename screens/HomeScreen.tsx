@@ -11,9 +11,11 @@ import CustomListItem from '../components/CustomListItem';
 import {NavigationProp, StackActions} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import {Avatar, Icon} from '@rneui/themed';
+import firestore from '@react-native-firebase/firestore';
 const HomeScreen: React.FC<{navigation: NavigationProp<any>}> = ({
   navigation,
 }) => {
+  const [chats, setChats] = React.useState<any[]>([]);
   const signOutUser = () => {
     auth()
       .signOut()
@@ -68,13 +70,49 @@ const HomeScreen: React.FC<{navigation: NavigationProp<any>}> = ({
     });
     return () => {};
   }, [navigation]);
+  React.useEffect(() => {
+    const unsub = firestore()
+      .collection('chats')
+      .onSnapshot(snap => {
+        setChats(
+          snap.docs.map(d => {
+            return {
+              id: d.id,
+              data: d.data(),
+            };
+          }),
+        );
+      });
+  }, []);
+  const enterChat = (id: string, chatName: string) => {
+    navigation.navigate('ChatScreen', {
+      id,
+      chatName,
+    });
+  };
   return (
     <SafeAreaView>
-      <ScrollView>{/* <CustomListItem /> */}</ScrollView>
+      <ScrollView style={styles.container}>
+        {/* <CustomListItem /> */}
+        {chats.map(({id, data: {chatName}}) => {
+          return (
+            <CustomListItem
+              enterChat={enterChat}
+              id={id}
+              chatName={chatName}
+              key={id}
+            />
+          );
+        })}
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+  },
+});

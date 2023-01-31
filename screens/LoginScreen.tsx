@@ -13,6 +13,7 @@ const LoginScreen: React.FC<{navigation: NavigationProp<any>}> = ({
   React.useEffect(() => {
     const unsub = auth().onAuthStateChanged(authUser => {
       if (authUser) {
+        console.log(authUser);
         navigation.dispatch(StackActions.replace('HomeScreen'));
       }
     });

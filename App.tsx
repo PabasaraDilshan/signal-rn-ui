@@ -14,12 +14,14 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import AddChatScreen from './screens/AddChatScreen';
+import ChatScreen from './screens/ChatScreen';
 
 const Stack = createNativeStackNavigator();
 const globalOptions: NativeStackNavigationOptions = {
   headerStyle: {backgroundColor: '#2C6BED'},
   headerTitleStyle: {color: 'white'},
   headerTintColor: 'white',
+
 };
 function App(): JSX.Element {
   return (
@@ -44,6 +46,11 @@ function App(): JSX.Element {
           options={{title: "Let's Register"}}
           name="AddChatScreen"
           component={AddChatScreen}
+        />
+        <Stack.Screen
+          options={{title: "Let's Register"}}
+          name="ChatScreen"
+          component={ChatScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
